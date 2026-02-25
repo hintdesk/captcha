@@ -29,6 +29,13 @@ Use [CaptchaRaw/](CaptchaRaw/) only to build train/validation datasets, then eva
 - Hardware: **GPU required**
 - Training time: **~90 minutes**
 
+Before running the fine-tune code, first run [finetune/prepare_data.py](finetune/prepare_data.py).
+
+This creates [CaptchaDatasets/](CaptchaDatasets/) with the required subfolders:
+
+- [CaptchaDatasets/train/](CaptchaDatasets/train/)
+- [CaptchaDatasets/validation/](CaptchaDatasets/validation/)
+
 ## Quick Comparison
 
 | Method | Accuracy | GPU | Training Time |
