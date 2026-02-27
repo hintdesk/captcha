@@ -154,7 +154,7 @@ def main():
     training_args = Seq2SeqTrainingArguments(
         output_dir="./finetuned",
         per_device_train_batch_size=16,
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=2,
         num_train_epochs=30,
         predict_with_generate=True,
         remove_unused_columns=False,
@@ -170,6 +170,9 @@ def main():
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
         dataloader_persistent_workers=True,
+        learning_rate=4e-5,
+        warmup_ratio=0.1,
+        weight_decay=0.01,
     )
 
     trainer = Seq2SeqTrainer(
@@ -178,7 +181,7 @@ def main():
         train_dataset=dataset["train"],
         eval_dataset=dataset["validation"],
         compute_metrics=lambda pred: compute_metrics(pred, processor),
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=5)],
     )
 
     logger.info("Starting training...")

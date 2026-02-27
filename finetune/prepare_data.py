@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import random
 from pathlib import Path
 
 
@@ -58,14 +59,18 @@ def main():
 
     # Get all PNG files from source directory
     print("\nCollecting PNG files from source directory...")
-    png_files = sorted([f for f in source_dir.iterdir() 
-                       if f.is_file() and f.suffix.lower() == ".png"])
+    png_files = [f for f in source_dir.iterdir() 
+                 if f.is_file() and f.suffix.lower() == ".png"]
     
     if not png_files:
         print(f"No PNG files found in {source_dir}")
         return
 
     print(f"Found {len(png_files)} PNG files\n")
+    
+    # Shuffle files randomly to avoid bias between train and validation splits
+    random.shuffle(png_files)
+    print("✓ Files shuffled randomly")
 
     # Split files 80/20
     train_split = int(len(png_files) * 0.8)
